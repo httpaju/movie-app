@@ -117,13 +117,13 @@
             <img class="movie-poster w-full h-48 rounded-lg mb-3" src="${movie.posterUrl}" alt="${movie.title} poster" />
             <h2 class="text-lg font-semibold truncate">${movie.title} (${movie.year})</h2>
             <p class="text-sm text-gray-400 mb-3 truncate"><strong>Genre:</strong> ${movie.genre.join(', ')}</p>
-            <button class="watch-button bg-blue-600 text-white px-3 py-2 rounded-lg w-full text-sm" onclick="window.location.href='player.html?id=${movie._id}'">Watch</button>
+            <button class="watch-button bg-blue-600 text-white px-3 py-2 rounded-lg w-full text-sm" onclick="window.location.href='player?id=${movie._id}'">Watch</button>
           `;
           container.appendChild(card);
         });
       } catch (error) {
         console.error('Error loading movies:', error);
-        window.location.href = 'error.html?context=movies';
+        window.location.href = 'error?context=movies';
       }
       loader.classList.add('hidden');
     }
