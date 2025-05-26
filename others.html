@@ -111,7 +111,7 @@
   function isInWebView() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     return (
-      ua.includes("AJAPP") ||  // Your custom UA string from the app
+      ua.includes("webView") ||  // Your custom UA string from the app
       ua.includes("wv") ||     // Android WebView flag
       (ua.includes("Android") && !ua.includes("Chrome"))
     );
