@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Others - AJ Movie Stream</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #0a0a0a;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      padding-bottom: 5rem;
+    }
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #111827;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #374151;
+    }
+    .nav-link {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-link.active {
+      color: #3b82f6;
+      font-weight: 600;
+    }
+    a.option-link {
+      display: block;
+      padding: 0.75rem 1rem;
+      background: #1f2937;
+      margin-bottom: 0.5rem;
+      border-radius: 0.75rem;
+      color: #93c5fd;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    a.option-link:hover {
+      background-color: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="max-w-md mx-auto px-4 py-6">
+    <h1 class="text-3xl font-semibold text-blue-500 mb-6">More Options</h1>
+
+    <div class="bg-gray-800 rounded-xl p-4 mb-4">
+      <h2 class="text-xl font-semibold mb-1">About</h2>
+      <p class="text-gray-400 text-sm">AJ Movie Stream is a free, login-free platform to stream movies online with a fast and modern UI.</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl p-4 mb-6">
+      <h2 class="text-xl font-semibold mb-2">Legal</h2>
+      <a href="privacy.html" class="option-link">Privacy Policy</a>
+      <a href="terms.html" class="option-link">Terms & Conditions</a>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl p-4 mb-6">
+      <h2 class="text-xl font-semibold mb-2">Support</h2>
+      <a href="contact.html" class="option-link">Contact Us</a>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl p-4 mb-4">
+      <h2 class="text-xl font-semibold mb-1">Downloads</h2>
+      <p class="text-gray-400 text-sm">Downloads are not supported in browser. Use our app for offline viewing (coming soon).</p>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl p-4">
+      <h2 class="text-xl font-semibold mb-1">Settings</h2>
+      <p class="text-gray-400 text-sm">Light/Dark mode and other preferences will be available in a future version.</p>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <a href="/" class="nav-link">
+      Home
+    </a>
+    <a href="search" class="nav-link">
+      Search
+    </a>
+    <a href="#" class="nav-link active">
+   Others
+    </a>
+  </nav>
+</body>
+</html>
