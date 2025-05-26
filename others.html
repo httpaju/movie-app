@@ -83,6 +83,17 @@
       <p class="text-gray-400 text-sm">Light/Dark mode and other preferences will be available in a future version.</p>
     </div>
   </div>
+  <!-- Add this before the closing </body> -->
+<div id="downloadApp" class="fixed bottom-20 right-4 z-50">
+  <a href="https://play.google.com/store/apps/details?id=com.your.package" target="_blank">
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-xl">
+      📥 Download App
+    </button>
+  </a>
+</div>
+
+
+
 
   <nav class="nav-bar fixed bottom-0 left-0 right-0 p-4 flex justify-around">
     <a href="/" class="nav-link text-gray-400">
@@ -96,4 +107,18 @@
     </a>
   </nav>
 </body>
+  <script>
+  function isInWebView() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (
+      ua.includes("AJAPP") ||  // Your custom UA string from the app
+      ua.includes("wv") ||     // Android WebView flag
+      (ua.includes("Android") && !ua.includes("Chrome"))
+    );
+  }
+
+  if (isInWebView()) {
+    document.getElementById('downloadApp').style.display = 'none';
+  }
+</script>
 </html>
