@@ -103,6 +103,13 @@
             <source src="${movie.videoUrl}" type="video/mp4" />
           </video>
           <p class="mt-4 text-gray-300">${movie.caption}</p>
+
+<div class="mt-4">
+  <a href="vlc://${movie.videoUrl}" class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/794px-VLC_Icon.svg.png" alt="VLC Icon" class="w-6 h-6 mr-2">
+    Watch in VLC
+  </a>
+</div>
         `;
 
         const player = new Plyr('#player', {
