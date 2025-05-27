@@ -79,7 +79,7 @@
     <div id="loader" class="loader"></div>
   </div>
 
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
   <script>
     async function loadMovie() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -110,23 +110,15 @@
     data-setup="{}"
   >
     <source src="${movie.videoUrl}" type="video/mp4" />
-    <source src="${movie.videoUrl}" type="video/webm" />
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a
-      web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank"
-        >supports HTML5 video</a
-      >
-    </p>
+ 
+    
   </video>
 
           <p class="mt-4 text-gray-300">${movie.caption}</p>
 
  `;
 
-        const player = new Plyr('#my-video', {
-          fullscreen: { enabled: true, fallback: true, iosNative: true }
-        });
+      
       } catch (error) {
         console.error('Error loading movie:', error);
         window.location.href = 'error.html?context=movie';
@@ -141,6 +133,6 @@
 
     loadMovie();
   </script>
-  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+ 
 </body>
 </html>
