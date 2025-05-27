@@ -110,7 +110,25 @@
 
           <p class="mt-4 text-gray-300">${movie.caption}</p>
 `;
-          var myFP = fluidPlayer(
+
+
+       const player = new Plyr('#player', {
+          fullscreen: { enabled: true, fallback: true, iosNative: true }
+        });
+      } catch (error) {
+        console.error('Error loading movie:', error);
+        window.location.href = 'error.html?context=movie';
+      }
+      loader.classList.add('hidden');
+    }
+    document.querySelector('.back-arrow').addEventListener('click', (e) => {
+      e.target.classList.add('clicked');
+      setTimeout(() => e.target.classList.remove('clicked'), 300);
+    });
+
+    loadMovie();
+  </script>
+	<script>          var myFP = fluidPlayer(
         'video-id',	{
 	"layoutControls": {
 		"controlBar": {
@@ -132,28 +150,14 @@
 		"playButtonShowing": true,
 		"fillToContainer": false,
 		"primaryColor": "#2563eb",
-		"posterImage": ""
+		"posterImage": "${movie.posterUrl}"
 	},
 	"vastOptions": {
 		"adList": [],
 		"adCTAText": false,
 		"adCTATextPosition": ""
 	}
-});
-
-      
-     
-      }
-      loader.classList.add('hidden');
-    }
-
-    document.querySelector('.back-arrow').addEventListener('click', (e) => {
-      e.target.classList.add('clicked');
-      setTimeout(() => e.target.classList.remove('clicked'), 300);
-    });
-
-    loadMovie();
-  </script>
+});</script>
 
 </body>
 </html>
