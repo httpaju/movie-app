@@ -103,13 +103,19 @@
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
            <video
     id="my-video"
-    class="video-js vjs-theme-city"
+    class="video-js vjs-default-skin"
     controls
     preload="auto"
     width="640"
     height="264"
     poster="${movie.posterUrl}"
-    data-setup="{}"
+    data-setup='{
+    "controls": true,
+    "preload": "auto",
+    "playbackRates": [0.5, 1, 1.5, 2],
+    "fluid": true,
+    "responsive": true
+  }'
   >
     <source src="${movie.videoUrl}" type="video/mp4" />
  
