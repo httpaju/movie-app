@@ -117,7 +117,7 @@
 
         playerContainer.innerHTML = `
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
-          <video id="video-id" class="plyr__video-wrapper" controlsList="nodownload" oncontextmenu="return false;">
+          <video id="video-id" class="plyr__video-wrapper" controls="controls" controlsList="nodownload" oncontextmenu="return false;">
             <source src="${movie.videoUrl}" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
