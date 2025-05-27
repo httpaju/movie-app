@@ -23,12 +23,10 @@
     }
     
     
-    .plyr__video-wrapper {
-      border-radius: 10px;
-      overflow: hidden;
+
      
   
-    }
+    
     .back-arrow {
       transition: transform 0.2s ease;
       cursor: pointer;
@@ -113,7 +111,7 @@
 
         playerContainer.innerHTML = `
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
-          <video id="video-id" class="plyr__video-wrapper" poster="${movie.posterUrl}" controls  controlsList="nodownload" width="640" height="360">
+          <video id="video-id" class="plyr__video-wrapper" controls  controlsList="nodownload" width="640" height="360">
             <source src="${movie.videoUrl}" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
