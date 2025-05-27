@@ -89,7 +89,7 @@
     <div id="loader" class="loader"></div>
   </div>
 
-  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+ 
   <script>
     async function loadMovie() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -118,44 +118,13 @@
         playerContainer.innerHTML = `
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
           <video id="video-id" class="plyr__video-wrapper">
-            <source src="${movie.videoUrl}" type="${mimeType}" />
+            <source src="${movie.videoUrl}" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <p class="mt-4 text-gray-300">${movie.caption}</p>
         `;
 
-        var myFP = fluidPlayer(
-          'video-id',
-          {
-            layoutControls: {
-              controlBar: {
-                autoHideTimeout: 3,
-                animated: true,
-                autoHide: true
-              },
-              htmlOnPauseBlock: {
-                html: null,
-                height: null,
-                width: null
-              },
-              autoPlay: false,
-              mute: true,
-              allowTheatre: true,
-              playPauseAnimation: true,
-              playbackRateEnabled: true,
-              allowDownload: false,
-              playButtonShowing: true,
-              fillToContainer: false,
-              primaryColor: "#2563eb",
-              posterImage: movie.posterUrl
-            },
-            vastOptions: {
-              adList: [],
-              adCTAText: false,
-              adCTATextPosition: ""
-            }
-          }
-        );
+       
 
         // Fallback message if MKV playback fails
         const videoElement = document.getElementById('video-id');
