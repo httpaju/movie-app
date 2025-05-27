@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>AJ Movie Stream - Watch</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
- <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
-  <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.10/dist/tailwind.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -47,6 +44,9 @@
       animation: spin 1s linear infinite;
       margin: 2rem auto;
     }
+    .hidden {
+      display: none;
+    }
     @keyframes slideIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -81,8 +81,7 @@
     <div id="loader" class="loader"></div>
   </div>
 
-<script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-
+  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
   <script>
     async function loadMovie() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -100,27 +99,56 @@
         const res = await fetch(`https://toxic-tabbi-ajapplications-cae06cf6.koyeb.app/api/movies/${id}`);
         if (!res.ok) throw new Error('API request failed');
         const movie = await res.json();
+        if (!movie.title || !movie.year || !movie.videoUrl || !movie.caption || !movie.posterUrl) {
+          throw new Error('Invalid movie data');
+        }
         playerContainer.innerHTML = `
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
-           <video>
-    <source src="${movie.videoUrl}" type="video/mp4" />
- 
-    
-  </video>
-
+          <video id="video-id" class="plyr__video-wrapper">
+            <source src="${movie.videoUrl}" type="video/mp4" />
+          </video>
           <p class="mt-4 text-gray-300">${movie.caption}</p>
-`;
+        `;
 
-
-       const player = new Plyr('#player', {
-          fullscreen: { enabled: true, fallback: true, iosNative: true }
-        });
+        var myFP = fluidPlayer(
+          'video-id',
+          {
+            layoutControls: {
+              controlBar: {
+                autoHideTimeout: 3,
+                animated: true,
+                autoHide: true
+              },
+              htmlOnPauseBlock: {
+                html: null,
+                height: null,
+                width: null
+              },
+              autoPlay: false,
+              mute: true,
+              allowTheatre: true,
+              playPauseAnimation: true,
+              playbackRateEnabled: true,
+              allowDownload: false,
+              playButtonShowing: true,
+              fillToContainer: false,
+              primaryColor: "#2563eb",
+              posterImage: movie.posterUrl
+            },
+            vastOptions: {
+              adList: [],
+              adCTAText: false,
+              adCTATextPosition: ""
+            }
+          }
+        );
       } catch (error) {
         console.error('Error loading movie:', error);
         window.location.href = 'error.html?context=movie';
       }
       loader.classList.add('hidden');
     }
+
     document.querySelector('.back-arrow').addEventListener('click', (e) => {
       e.target.classList.add('clicked');
       setTimeout(() => e.target.classList.remove('clicked'), 300);
@@ -128,36 +156,5 @@
 
     loadMovie();
   </script>
-	<script>          var myFP = fluidPlayer(
-        'video-id',	{
-	"layoutControls": {
-		"controlBar": {
-			"autoHideTimeout": 3,
-			"animated": true,
-			"autoHide": true
-		},
-		"htmlOnPauseBlock": {
-			"html": null,
-			"height": null,
-			"width": null
-		},
-		"autoPlay": false,
-		"mute": true,
-		"allowTheatre": true,
-		"playPauseAnimation": true,
-		"playbackRateEnabled": true,
-		"allowDownload": false,
-		"playButtonShowing": true,
-		"fillToContainer": false,
-		"primaryColor": "#2563eb",
-		"posterImage": "${movie.posterUrl}"
-	},
-	"vastOptions": {
-		"adList": [],
-		"adCTAText": false,
-		"adCTATextPosition": ""
-	}
-});</script>
-
 </body>
 </html>
