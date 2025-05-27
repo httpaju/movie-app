@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>AJ Movie Stream - Watch</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+ <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -99,19 +99,32 @@
         const movie = await res.json();
         playerContainer.innerHTML = `
           <h2 class="text-2xl font-bold mb-4">${movie.title} (${movie.year})</h2>
-          <video id="player" playsinline controls crossorigin>
-            <source src="${movie.videoUrl}" type="video/mp4" />
-          </video>
+           <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    poster="${movie.posterUrl}"
+    data-setup="{}"
+  >
+    <source src="${movie.videoUrl}" type="video/mp4" />
+    <source src="${movie.videoUrl}" type="video/webm" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+
           <p class="mt-4 text-gray-300">${movie.caption}</p>
 
-<div class="mt-4">
-  <a href="vlc://${movie.videoUrl}" class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/794px-VLC_Icon.svg.png" alt="VLC Icon" class="w-6 h-6 mr-2">
-    Watch in VLC
-  </a>
-</div> `;
+ `;
 
-        const player = new Plyr('#player', {
+        const player = new Plyr('#my-video', {
           fullscreen: { enabled: true, fallback: true, iosNative: true }
         });
       } catch (error) {
@@ -128,5 +141,6 @@
 
     loadMovie();
   </script>
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
 </body>
 </html>
