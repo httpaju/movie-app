@@ -110,7 +110,7 @@
 
           <p class="mt-4 text-gray-300">${movie.caption}</p>
 `;
-        var myFP = fluidPlayer(
+          var myFP = fluidPlayer(
         'video-id',	{
 	"layoutControls": {
 		"controlBar": {
@@ -130,37 +130,19 @@
 		"playbackRateEnabled": true,
 		"allowDownload": false,
 		"playButtonShowing": true,
-		"fillToContainer": true,
+		"fillToContainer": false,
 		"primaryColor": "#2563eb",
 		"posterImage": ""
 	},
 	"vastOptions": {
-		"adList": [
-			{
-				"roll": "preRoll",
-				"vastTag": "",
-				"adText": ""
-			},
-			{
-				"roll": "midRoll",
-				"vastTag": "",
-				"adText": ""
-			},
-			{
-				"roll": "onPauseRoll",
-				"vastTag": "",
-				"adText": ""
-			}
-		],
+		"adList": [],
 		"adCTAText": false,
 		"adCTATextPosition": ""
 	}
 });
 
       
-      } catch (error) {
-        console.error('Error loading movie:', error);
-        window.location.href = 'error.html?context=movie';
+     
       }
       loader.classList.add('hidden');
     }
