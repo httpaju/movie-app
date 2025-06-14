@@ -98,7 +98,7 @@
 
       loader.classList.remove('hidden');
       try {
-        const res = await fetch(`https://toxic-tabbi-ajapplications-cae06cf6.koyeb.app/api/movies/${id}`);
+        const res = await fetch(`https://movie-server-cd5t.onrender.com/api/movies/${id}`);
         if (!res.ok) throw new Error('API request failed');
         const movie = await res.json();
         if (!movie.title || !movie.year || !movie.videoUrl || !movie.caption || !movie.posterUrl) {
