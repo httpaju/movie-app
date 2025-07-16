@@ -156,7 +156,6 @@
   </header>
 
   <div class="container mx-auto px-4 py-6">
-    <div id="banner-container" class="banner-container hidden"></div>
     <div class="flex justify-start mb-4">
       <a href="/" class="back-arrow" role="button" tabindex="0" aria-label="Go back to homepage">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,6 +163,8 @@
         </svg>
       </a>
     </div>
+    <div id="banner-container" class="banner-container hidden"></div>
+    
     <div id="player-container" class="player-container"></div>
     <div id="loader" class="loader"></div>
     <div id="error-message" class="hidden text-red-500 text-center mt-4"></div>
@@ -263,8 +264,8 @@
               <h2 class="text-3xl font-bold mb-4">${sanitizeHTML(movie.title)} (${movie.year})</h2>
               <p class="text-gray-300 mb-6">${sanitizeHTML(movie.caption)}</p>
               <div class="flex gap-4">
-                <button id="play-now" class="btn-play-now text-white font-semibold" role="button" tabindex="0" aria-label="Play movie in external app">Play Now</button>
-                <a href="${videoUrl}" download class="btn-download text-white font-semibold inline-block" role="button" tabindex="0" aria-label="Download movie">Download</a>
+                <button id="play-now" class="btn-play-now text-white font-semibold" role="button" tabindex="0" aria-label="Play movie in external app">Play</button>
+                <a href="${videoUrl}" download class="btn-download text-white font-semibold inline-block" role="button" tabindex="0" aria-label="Download movie">⤓</a>
               </div>
               ${warningMessage}
             </div>
