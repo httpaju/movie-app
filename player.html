@@ -239,10 +239,7 @@
         bannerContainer.style.backgroundImage = `url('${sanitizedPosterUrl}')`;
         bannerContainer.classList.remove('hidden');
 
-        document.getElementById('open-vlc').href = `vlc://${videoUrl}`;
-document.getElementById('open-kmplayer').href = `kmplayer://${videoUrl}`;
-document.getElementById('open-nplayer').href = `nplayer://${videoUrl}`;
-document.getElementById('open-mxplayer').href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=${encodeURIComponent(movie.title)};end`;
+      
 
 
         // Determine video type
@@ -273,6 +270,11 @@ document.getElementById('open-mxplayer').href = `intent:${videoUrl}#Intent;packa
             </div>
           </div>
         `;
+
+          document.getElementById('open-vlc').href = `vlc://${videoUrl}`;
+          document.getElementById('open-kmplayer').href = `kmplayer://${videoUrl}`;
+          document.getElementById('open-nplayer').href = `nplayer://${videoUrl}`;
+          document.getElementById('open-mxplayer').href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=${encodeURIComponent(movie.title)};end`;
 
         // Handle Play Now button
         const playNowButton = document.getElementById('play-now');
