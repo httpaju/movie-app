@@ -68,6 +68,52 @@
     .btn-play-now:hover {
       background: #1e40af;
     }
+    .btn-download {
+      background: #e11d48;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    .btn-download:hover {
+      background: #b91c3a;
+    }
+    .btn-copy {
+      background: #10b981;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    .btn-copy:hover {
+      background: #059669;
+    }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .modal-content {
+      background: #1f2937;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .app-link {
+      color: #2563eb;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+    .app-link:hover {
+      color: #1e40af;
+    }
     .loader {
       border: 4px solid #e5e7eb;
       border-top: 4px solid #2563eb;
@@ -117,6 +163,22 @@
     <div id="player-container" class="player-container"></div>
     <div id="loader" class="loader"></div>
     <div id="error-message" class="hidden text-red-500 text-center mt-4"></div>
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 class="text-xl font-bold mb-4">Play Video in External App</h2>
+        <p class="mb-4">Click an app link to open the video directly, or copy the link to paste into your preferred app. These apps support various video formats (MP4, MKV, AVI, MOV, HLS) and multiple audio tracks. If an app isn't installed, download it from its official site.</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li><a href="vlc://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in VLC Media Player">VLC Media Player</a> (Desktop, Android, iOS): Free, open-source, supports all formats, including MKV and HLS, with multi-audio track switching. <a href="https://www.videolan.org/vlc/" target="_blank" class="app-link">Download VLC</a>.</li>
+          <li><a href="kmplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in KMPlayer">KMPlayer</a> (Windows, Android, iOS): Supports MP4, MKV, AVI, MOV, 3D, with audio track selection. <a href="https://www.kmplayer.com/" target="_blank" class="app-link">Download KMPlayer</a>.</li>
+          <li><a href="nplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in nPlayer">nPlayer</a> (iOS, some Android): Supports MP4, MKV, AVI, MOV, with multi-audio tracks (ads in free version). <a href="https://www.nplayer.com/" target="_blank" class="app-link">Download nPlayer</a>.</li>
+          <li><a href="mxplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in MX Player">MX Player</a> (Android, limited iOS): Supports MP4, MKV, AVI, with audio track switching (ads in free version). <a href="https://mxplayer.in/" target="_blank" class="app-link">Download MX Player</a>.</li>
+        </ul>
+        <div class="flex gap-4">
+          <button id="copy-link" class="btn-copy text-white font-semibold" role="button" tabindex="0" aria-label="Copy video link">Copy Link</button>
+          <button id="close-modal" class="btn-download text-white font-semibold" role="button" tabindex="0" aria-label="Close modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -125,13 +187,27 @@
       return DOMPurify.sanitize(str);
     }
 
+    // Check Content-Type of video URL
+    async function checkVideoContentType(videoUrl) {
+      try {
+        const response = await fetch(videoUrl, { method: 'HEAD' });
+        return response.headers.get('Content-Type');
+      } catch (error) {
+        console.error('Error checking Content-Type:', error);
+        return null;
+      }
+    }
+
     async function loadMovie() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
       const playerContainer = document.getElementById('player-container');
       const bannerContainer = document.getElementById('banner-container');
-      const loaderButton = document.getElementById('loader');
+      const loader = document.getElementById('loader');
       const errorMessage = document.getElementById('error-message');
+      const modal = document.getElementById('modal');
+      const copyLinkButton = document.getElementById('copy-link');
+      const closeModalButton = document.getElementById('close-modal');
 
       // Validate ID
       if (!id || typeof id !== 'string' || id.trim() === '') {
@@ -154,22 +230,69 @@
         }
 
         // Set banner background
-        bannerContainer.style.backgroundImage = `url('${sanitizeHTML(movie.posterUrl)}')`;
+        const sanitizedPosterUrl = sanitizeHTML(movie.posterUrl);
+        bannerContainer.style.backgroundImage = `url('${sanitizedPosterUrl}')`;
         bannerContainer.classList.remove('hidden');
+
+        // Determine video type
+        const videoUrl = sanitizeHTML(movie.videoUrl);
+        const contentType = await checkVideoContentType(videoUrl);
+        const isUnsupported = !videoUrl.includes('.m3u8') && !videoUrl.includes('.mp4') && !videoUrl.includes('.webm');
+
+        // Warning for unsupported formats
+        let warningMessage = '';
+        if (isUnsupported) {
+          warningMessage = `<p class="text-yellow-400 mt-4">Note: The video format (${contentType || 'unknown'}) may require an external player like VLC to play. Use the "Play Now" button to open in a supported app.</p>`;
+        }
 
         // Populate movie details
         playerContainer.innerHTML = `
           <div class="flex flex-col md:flex-row gap-6 relative z-10">
             <div class="md:w-1/3">
-              <img src="${sanitizeHTML(movie.posterUrl)}" alt="${sanitizeHTML(movie.title)} poster" class="w-full rounded-lg shadow-lg" loading="lazy" />
+              <img src="${sanitizedPosterUrl}" alt="${sanitizeHTML(movie.title)} poster" class="w-full rounded-lg shadow-lg" loading="lazy" />
             </div>
             <div class="md:w-2/3">
               <h2 class="text-3xl font-bold mb-4">${sanitizeHTML(movie.title)} (${movie.year})</h2>
               <p class="text-gray-300 mb-6">${sanitizeHTML(movie.caption)}</p>
-              <a href="${sanitizeHTML(movie.videoUrl)}" class="btn-play-now text-white font-semibold inline-block" role="button" tabindex="0" aria-label="Play movie in external player">Play Now</a>
+              <div class="flex gap-4">
+                <button id="play-now" class="btn-play-now text-white font-semibold" role="button" tabindex="0" aria-label="Play movie in external app">Play Now</button>
+                <a href="${videoUrl}" download class="btn-download text-white font-semibold inline-block" role="button" tabindex="0" aria-label="Download movie">Download</a>
+              </div>
+              ${warningMessage}
             </div>
           </div>
         `;
+
+        // Handle Play Now button
+        const playNowButton = document.getElementById('play-now');
+        playNowButton.addEventListener('click', () => {
+          modal.classList.remove('hidden');
+          copyLinkButton.focus();
+        });
+
+        // Handle Copy Link button
+        copyLinkButton.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(videoUrl);
+            alert('Video link copied to clipboard!');
+          } catch (err) {
+            console.error('Failed to copy:', err);
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = 'Failed to copy link. Please try again.';
+          }
+        });
+
+        // Handle Close Modal button
+        closeModalButton.addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+
+        // Handle keyboard navigation for modal
+        modal.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            modal.classList.add('hidden');
+          }
+        });
 
       } catch (error) {
         console.error('Error loading movie:', error);
@@ -193,20 +316,6 @@
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         backArrow.click();
-      }
-    });
-
-    // Handle play now button
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('btn-play-now')) {
-        e.preventDefault();
-        const videoUrl = e.target.getAttribute('href');
-        // Try opening in external player
-        window.location.href = videoUrl;
-        // Fallback alert if no player is detected
-        setTimeout(() => {
-          alert('Please install a video player like VLC or MX Player to open this video.');
-        }, 1000);
       }
     });
 
