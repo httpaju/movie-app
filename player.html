@@ -86,6 +86,18 @@
     .btn-copy:hover {
       background: #059669;
     }
+    .btn-app {
+      background: #2563eb;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+      display: inline-block;
+      margin: 0.25rem 0;
+      text-align: center;
+    }
+    .btn-app:hover {
+      background: #1e40af;
+    }
     .modal {
       position: fixed;
       top: 0;
@@ -105,14 +117,6 @@
       max-width: 90%;
       max-height: 80vh;
       overflow-y: auto;
-    }
-    .app-link {
-      color: #2563eb;
-      text-decoration: underline;
-      transition: color 0.3s ease;
-    }
-    .app-link:hover {
-      color: #1e40af;
     }
     .loader {
       border: 4px solid #e5e7eb;
@@ -166,13 +170,13 @@
     <div id="modal" class="modal hidden">
       <div class="modal-content">
         <h2 class="text-xl font-bold mb-4">Play Video in External App</h2>
-        <p class="mb-4">Click an app link to open the video directly, or copy the link to paste into your preferred app. These apps support various video formats (MP4, MKV, AVI, MOV, HLS) and multiple audio tracks. If an app isn't installed, download it from its official site.</p>
-        <ul class="list-disc pl-6 mb-4">
-          <li><a href="vlc://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in VLC Media Player">VLC Media Player</a>.</li>
-          <li><a href="kmplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in KMPlayer">KMPlayer</a>.</li>
-          <li><a href="nplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in nPlayer">nPlayer</a>.</li>
-          <li><a href="mxplayer://${sanitizeHTML(videoUrl)}" class="app-link" aria-label="Open video in MX Player">MX Player</a>.</li>
-        </ul>
+        <p class="mb-4">Click an app button to open the video directly, or copy the link to paste into your preferred app.</p>
+        <div class="flex flex-col gap-2 mb-4">
+          <a href="vlc://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in VLC Media Player">VLC Media Player</a>
+          <a href="kmplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in KMPlayer">KMPlayer</a>
+          <a href="nplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in nPlayer">nPlayer</a>
+          <a href="mxplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in MX Player">MX Player</a>
+        </div>
         <div class="flex gap-4">
           <button id="copy-link" class="btn-copy text-white font-semibold" role="button" tabindex="0" aria-label="Copy video link">Copy Link</button>
           <button id="close-modal" class="btn-download text-white font-semibold" role="button" tabindex="0" aria-label="Close modal">Close</button>
