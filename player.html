@@ -172,10 +172,10 @@
         <h2 class="text-xl font-bold mb-4">Play Video in External App</h2>
         <p class="mb-4">Click an app button to open the video directly, or copy the link to paste into your preferred app.</p>
         <div class="flex flex-col gap-2 mb-4">
-          <a href="vlc://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in VLC Media Player">VLC Media Player</a>
-          <a href="kmplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in KMPlayer">KMPlayer</a>
-          <a href="nplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in nPlayer">nPlayer</a>
-          <a href="mxplayer://${sanitizeHTML(videoUrl)}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in MX Player">MX Player</a>
+          <a href="vlc://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in VLC Media Player">VLC Media Player</a>
+          <a href="kmplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in KMPlayer">KMPlayer</a>
+          <a href="nplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in nPlayer">nPlayer</a>
+          <a href="mxplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in MX Player">MX Player</a>
         </div>
         <div class="flex gap-4">
           <button id="copy-link" class="btn-copy text-white font-semibold" role="button" tabindex="0" aria-label="Copy video link">Copy Link</button>
