@@ -175,7 +175,7 @@
           <a href="vlc://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in VLC Media Player">VLC Media Player</a>
           <a href="kmplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in KMPlayer">KMPlayer</a>
           <a href="nplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in nPlayer">nPlayer</a>
-          <a href="mxplayer://${videoUrl}" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in MX Player">MX Player</a>
+          <a href="intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=${encodeURIComponent(movie.title)};end" class="btn-app text-white font-semibold" role="button" tabindex="0" aria-label="Open video in MX Player">MX Player</a>
         </div>
         <div class="flex gap-4">
           <button id="copy-link" class="btn-copy text-white font-semibold" role="button" tabindex="0" aria-label="Copy video link">Copy Link</button>
